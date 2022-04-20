@@ -1,0 +1,53 @@
+package kr.or.ddit.basic;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ArrayListTest03 {
+
+	public static void main(String[] args) {
+		// Q. 5명의 별명을 입력 받아 ArrayList에 저장한 후 별명의 길이가 제일 긴 별명을 출력하시오.
+
+		ArrayList<String> nickList = new ArrayList<String>();
+		Scanner scan = new Scanner (System.in);
+		for (int i = 0; i < 5; i++) {
+			System.out.println(i+1 + "번 째 별명을 입력해주세요.");
+			
+			String nick = scan.nextLine();
+			nickList.add(nick);
+			System.out.println(nickList);
+		}
+		
+		String temp = "";
+		for (int i = 0; i < nickList.size()-1;  i++) {
+			for (int j = 1; j < nickList.size(); j++) {
+				if(nickList.get(i).length() < nickList.get(j).length()) {
+					temp = nickList.set(i, nickList.get(j));
+					nickList.set(j, temp);
+					System.out.println(nickList);
+				}
+			}
+		}
+		
+		System.out.println("제일 별명이 긴 사람 : " + nickList.get(0));
+		
+		System.out.println("----------------------------------------------");
+		
+		//정답
+		//제일 긴 별명의 길이가 저장될 변수 -> 리스트의 첫번 째 데이터의 길이로 초기화
+		int maxLength = nickList.get(0).length();
+	
+		for (int i = 1; i < nickList.size(); i++) {
+			if(maxLength < nickList.get(i).length()) {
+				maxLength = nickList.get(i).length();
+			}
+		}
+		for (String nick : nickList) {
+			if(maxLength == nick.length()) {
+				System.out.println("제일 별명이 긴 사람 : " + nick);
+			}
+		}
+		
+	}
+
+}
