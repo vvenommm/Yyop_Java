@@ -1,5 +1,9 @@
 package kr.or.ddit.basic;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class StudentTest {
 	
 	/*
@@ -20,8 +24,220 @@ public class StudentTest {
 	 */
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ArrayList<Student> stuList = new ArrayList<Student>();
+		
+		stuList.add(new Student((int)(Math.random()*26), "이정후", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "은주영", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "박다혜", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이다솜", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이다솜", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이가은", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이상학", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "신현국", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "김은태", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "황명성", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이재원", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "문승제", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "권흥종", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이규범", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "안은실", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이희경", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "오세영", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "김민정", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "최민정", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "전윤미", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "김수원", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "이소정", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "임정은", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "최지은", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		stuList.add(new Student((int)(Math.random()*26), "최지연", (int)(Math.random()*101), (int)(Math.random()*101), (int)(Math.random()*101)));
+		
+		
+		//등수 구하기
+		for (Student s1 : stuList) {
+			for (Student s2 : stuList) {
+			if(s1.getTotal() < s2.getTotal()) {
+				s1.setRank(s1.getRank()+1);
+			}
+			}
+		}
+		
+		
+		
+		System.out.println("정렬 전...");
+		for(Student student : stuList) {
+			System.out.println(student.toString());
+		}
+		System.out.println("-----------------------------------");
+
+		System.out.println("내부 정렬 후...");
+		Collections.sort(stuList);
+		for(Student student : stuList) {
+			System.out.println(student.toString());
+		}
+		
+		System.out.println("-----------------------------------");
+				Collections.sort(stuList, new totalAsc());
+		
+		System.out.println("외부 정렬 후...");
+		for (Student student : stuList) {
+			System.out.println(student.toString());
+		}
+		System.out.println("-----------------------------------");
 
 	}
 
+}
+
+
+class Student implements Comparable<Student>{
+	
+	private int stuNum; //학번
+	private String name; //이름
+	private int kor; //국어
+	private int eng; //영어
+	private int math; //수학
+	private int total; //과목 총점
+	private int rank; //등수
+	
+	
+
+	public Student(int stuNum, String name, int kor, int eng, int math) {
+		super();
+		this.stuNum = stuNum;
+		this.name = name;
+		this.kor = kor;
+		this.eng = eng;
+		this.math = math;
+		this.total = kor + eng + math;
+		this.rank = 1;
+	}
+
+
+
+	@Override
+	public int compareTo(Student s) {
+		// TODO 학번의 오름차순으로 정렬할 내부 정렬 기준
+		if(this.getStuNum() < s.getStuNum()) {
+			return -1;
+		}else if(this.getStuNum() > s.getStuNum()) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+
+
+
+	public int getStuNum() {
+		return stuNum;
+	}
+
+
+
+	public void setStuNum(int stuNum) {
+		this.stuNum = stuNum;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public int getKor() {
+		return kor;
+	}
+
+
+
+	public void setKor(int kor) {
+		this.kor = kor;
+	}
+
+
+
+	public int getEng() {
+		return eng;
+	}
+
+
+
+	public void setEng(int eng) {
+		this.eng = eng;
+	}
+
+
+
+	public int getMath() {
+		return math;
+	}
+
+
+
+	public void setMath(int math) {
+		this.math = math;
+	}
+
+
+
+	public int getTotal() {
+		return total;
+	}
+
+
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+
+
+	public int getRank() {
+		return rank;
+	}
+
+
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Student [stuNum=" + stuNum + ", name=" + name + ", kor=" + kor + ", eng=" + eng + ", math=" + math
+				+ ", total=" + total + ", rank=" + rank + "]";
+	}
+	
+	
+}
+
+
+class totalAsc implements Comparator<Student>{
+
+	@Override
+	public int compare(Student s1, Student s2) {
+		// TODO 총점의 역순으로 정렬, 총점이 같으면 이름의 내림차순으로 정렬
+		if(s1.getTotal() > s2.getTotal()) {
+			return -1;
+		}else if(s1.getTotal() < s2.getTotal()) {
+			return 1;
+		}else {
+			if(s1.getName().compareTo(s2.getName()) > 0) {
+				return 1;
+			}
+			return 0;
+		}
+	}
+	
 }
