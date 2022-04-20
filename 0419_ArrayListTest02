@@ -1,0 +1,111 @@
+package kr.or.ddit.basic;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ArrayListTest02 {
+
+	public static void main(String[] args) {
+		/*
+		 Q. 5명의 사람 이름을 입력 받아 ArrayList에 저장 후
+		 이들 중 '김'씨 성의 이름을 모두 출력하시오.
+		 */
+		 
+		ArrayList list = new ArrayList();
+		Scanner scan = new Scanner(System.in);
+		
+		for(int i = 0; i < 5; i++) {
+			System.out.println("이름을 입력하세요.\n->");
+			String name = scan.nextLine();
+			list.add(name);
+		}
+		
+		char a = '김';
+		
+		String[] names = (String[])list.toArray(new String[0]);
+		for(int i = 0; i < list.size(); i++) {
+			System.out.println("\n=======================\n");
+			
+			if(names[i].contains("김")) {
+					System.out.println("contains 사용 : " + names[i]);
+			}
+			
+			System.out.println("\n=======================\n");
+			
+			if(names[i].indexOf("김") == 0) {
+				System.out.println("indexOf 사용 : " + names[i]);
+			}
+			
+			System.out.println("\n=======================\n");
+			
+			if(names[i].lastIndexOf("김") == 2) {
+				System.out.println("lastIndexOf 사용 : " + names[i]);
+			}
+			
+			System.out.println("\n=======================\n");
+			
+			if(names[i].substring(0, 1).equals("김")) {
+				System.out.println("substring 사용 : " + names[i]);
+			}
+			
+			System.out.println("\n=======================\n");
+			
+			if(names[i].charAt(0) == a) {
+				System.out.println("charAt 사용 : " + names[i]);
+			}
+			
+			System.out.println("\n=======================\n");
+			
+			if(names[i].startsWith("김")) {
+				System.out.println("startsWith 사용 : " + names[i]);
+			}
+			
+		}
+		
+		
+		System.out.println("------------------------------------------------------------------------------");
+		
+		//정답
+		
+		//스캐너 열기
+		ArrayList<String> nameList = new ArrayList();
+		
+		System.out.println("5명의 이름을 입력하세요.");
+		for(int i = 0; i < 5; i++) {
+			System.out.print(i + "번 째 이름 이력 : ");
+			String nm = scan.next();
+			nameList.add(nm);
+		}
+		
+		System.out.println();
+		System.out.println("김씨 성을 가진 사람들...");
+		for(int i = 0; i < nameList.size(); i++) {
+			if(nameList.get(i).charAt(0) == '김') {
+				System.out.println(nameList.get(i));
+				}
+				
+			System.out.println(i + "---------------");
+				
+			if(nameList.get(i).substring(0, 1).equals("김")) {
+				System.out.println(nameList.get(i));
+			}
+				
+			System.out.println(i + "---------------");
+				
+			if(nameList.get(i).substring(0, 1).equals("김")) {
+				System.out.println(nameList.get(i));
+			}
+				
+			System.out.println(i + "---------------");
+				
+			if(nameList.get(i).startsWith("김")) {
+				System.out.println(nameList.get(i));
+			}	
+				
+			System.out.println(i + "---------------");
+				
+		}
+
+	}
+
+}
