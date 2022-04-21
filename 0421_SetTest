@@ -1,5 +1,9 @@
 package kr.or.ddit.basic;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+
 public class SetTest {
 
 	public static void main(String[] args) {
@@ -15,6 +19,108 @@ public class SetTest {
 			- 중복되는 데이터를 저장할 수 없다.
 		 */
 
+		HashSet hs1 = new HashSet();
+		
+		//Set에 데이터를 추가할 때에도 add() 메소드를 사용
+		hs1.add("DD");
+		hs1.add("AA");
+		hs1.add(2);
+		hs1.add("CC");
+		hs1.add("BB");
+		hs1.add(1);
+		hs1.add(3);
+		
+		System.out.println("Set의 size : " + hs1.size());
+		System.out.println("Set의 data : " + hs1); //넣은 순서와 출력되는 순서가 같지 않을 수 있음
+		
+		System.out.println("\n=================================================================\n");
+		
+		//Set에 중복되는 데이터를 추가하면 false를 반환, 데이터를 추가하지 않음
+		boolean isAdd = hs1.add("FF");
+		System.out.println("중복일 때 false : " + isAdd);
+		System.out.println("Set의 데이터 : " + hs1);
+		
+		System.out.println("\n=================================================================\n");
+		
+		isAdd = hs1.add("CC");
+		System.out.println("중복일 때 false : " + isAdd);
+		System.out.println("Set의 데이터 : " + hs1);
+		
+		System.out.println("\n=================================================================\n");
+
+		
+		/*
+			Set의 데이터 수정하기 : Set에는 수정하는 명령이 따로 없기 때문에 해당 자료를 삭제한 후 새로 추가해 주는 방법을 사용
+			
+			삭제하는 메소드 : remove(삭제할 자료) -> 반환값 : 삭제성공(true), 삭제싶해(false)
+							  clear() -> 전체삭제
+		 */
+		
+		//예) "FF"를 "EE"로 변경하기
+		hs1.remove("FF");
+		System.out.println("FF 삭제 후 Set : " + hs1);
+
+		System.out.println("\n=================================================================\n");
+		
+		hs1.add("EE");
+		System.out.println("EE 추가 후 Set 데이터 : " + hs1);
+		
+		System.out.println("\n=================================================================\n");
+
+//		hs1.clear();
+//		System.out.println("Set 데이터 : " + hs1);
+//		
+//		System.out.println("\n=================================================================\n");
+		
+		/*
+			Set의 데이터는 순서(index)가 없기 때문에 List처럼 index로 데이터를 하나씩 불러올 수 없다.
+			그래서 데이터를 하나씩 얻기 위해서는 Iterator형 객체로 변환해야 한다.
+			
+			- Set형의 데이터를 Iterator형 객체로 변환해주는 메소드 -> iterator()
+		 */
+		
+		Iterator it = hs1.iterator(); //Set의 데이터를 Iterator로 변환하기
+		
+		//Iterator의 hasNext()메소드 : Iterator의 포인터가 가리키는 곳의 다음 번째에 데이터가 존재하는지 검사
+		//-> 데이터가 있으면 true, 없으면 false를 반환 
+		
+		while(it.hasNext()) {
+			//Iterator의 next()메소드 -> Iterator의 포인터를 다음 위치로 이동시킨 수 그 위치의 데이터를 반환
+			System.out.println(it.next());
+		}
+		System.out.println("출력 끝!");
+		
+		System.out.println("\n=================================================================\n");
+		
+		//우리 반 학생들 중 번호를 이용하여 추첨하는 프로그램을 작성해보자.
+		//번호는 1번부터 25번까지 있고, 추첨할 인원은 3명이다.
+		//당첨자를 출력해보시오
+		
+		//최소값~최대값 사이의 정수형 난수 만들기
+		//(int)(Math.random() * 정수형 최대값 - 최소값 + 1) + 최소값)
+		
+		HashSet<Integer> testSet = new HashSet<Integer>();
+		while(testSet.size() < 3) {
+			testSet.add((int)(Math.random() * (25-1+1)+1));
+		}
+		System.out.println("당첨자 번호 : " + testSet);
+		
+		System.out.println("\n=================================================================\n");
+
+		//Iterator 대신 향상된 for문을 사용하기
+		System.out.println("향상된 for문");
+		for(Object obj : hs1) {
+			System.out.println(obj);
+		}
+		
+		System.out.println("\n=================================================================\n");
+
+		//Set유형의 자룔를 List형으로 변환하기
+		ArrayList testList = new ArrayList(hs1);
+		for (int i = 0; i < testList.size(); i++) {
+			System.out.println(testList.get(i));
+		}
+		
 	}
 
 }
