@@ -1,6 +1,7 @@
 package kr.or.ddit.basic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -138,20 +139,26 @@ public class LottoTest {
 	private void lotto(int amt) {
 		// TODO 로또 번호 발행
 		
-		Set<Integer> lotto = new HashSet<Integer>();
+		HashSet<Integer> lotto = new HashSet<Integer>();
 //		ArrayList<Integer> lottoBag = new ArrayList<Integer>();
 		int repeat = 0;
 		System.out.println("\n\n행운의 로또번호는 아래와 같습니다.");
 		int a = 1;
 
 		while(a <= amt) {
+			lotto.clear();
+		
 			while(lotto.size() <= 6) {
-				lotto.add((int)(Math.random() * 25 - 1 + 1) + 1);
+				lotto.add((int)(Math.random() * 45 - 1 + 1) + 1);
 			}
-			System.out.println("로또번호 " + a + "번 : " + lotto);
+			
+			ArrayList lottoPrint = new ArrayList(lotto);
+					
+			Collections.sort(lottoPrint);
+			
+			System.out.println("로또번호 " + a + "번 : " + lottoPrint);
 			a++;
 		}
-		
  	}
 
 	public static void main(String[] args) {
@@ -160,3 +167,4 @@ public class LottoTest {
 	}
 
 }
+
