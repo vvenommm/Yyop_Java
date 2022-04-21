@@ -1,6 +1,9 @@
 package kr.or.ddit.basic;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class LottoTest {
 	/*
@@ -78,7 +81,10 @@ public class LottoTest {
 
 	public void start() {
 		// TODO 프로그램 시작
-		System.out.println("==========================");
+		
+		while(true) {
+		
+		System.out.println("\n\n\n==========================");
 		System.out.println("\tLotto 프로그램");
 		System.out.println("--------------------------");
 		System.out.println(" 1. Lotto 구입\n 2. 프로그램 종료");
@@ -89,40 +95,64 @@ public class LottoTest {
 		switch(start) {
 		case 1:
 			buy();
+			break;
 		case 2:
+			System.out.println("감사합니다.");
 			System.exit(0);
+		default :
+			System.out.println("잘못된 입력입니다.\n다시 입력해주세요.");
+			start();
+		}
 		}
 		
 	}
 	
 	private void buy() {
 		// TODO Auto-generated method stub
-		System.out.println("현재 보유 금액 : " + wallet + "원\n(1000원에 로또번호 하나입니다.)\n금액 입력 : ");
+		System.out.println("\n\n현재 보유 금액 : " + wallet + "원\n(1000원에 로또번호 하나입니다.)\n\n금액 입력 : ");
 		int money = scan.nextInt();
 		
 		if(money > wallet) {
-			System.out.println("보유 현금이 부족합니다.\n다시 입력 해주세요.");
+			System.out.println("\n\n보유 현금이 부족합니다.\n다시 입력 해주세요.");
 			buy();
 		}else if(money >= 101000) {
-			System.out.println("최대 100장까지 구매 가능합니다.\n다시 입력 해주세요.");
+			System.out.println("\n\n최대 100장까지 구매 가능합니다.\n다시 입력 해주세요.");
 			buy();
 		}else if(money < wallet && money < 1000){
-			System.out.println("1000원 이상 지불해주세요.");
+			System.out.println("\n\n로또번호 하나에 1,000원입니다.\n다시 입력 해주세요.");
 			buy();
-		}else if(money < wallet && money > 1000) {
+		}else if(money < wallet && money >= 1000) {
 			int amt = money/1000;
 			int chg = money%1000;
-			System.out.println(amt + "개 구입 하였습니다.\n거스름 돈 : " + chg + "원");
 			
-			lotto();
+			wallet = wallet - money + chg;
+
+			System.out.println("\n\n" + amt + "개 구입 하였습니다.\n거스름 돈 : " + chg + "원");
+			
+			lotto(amt);
+			
 		}
 		
 	}
 
-	private void lotto() {
+	private void lotto(int amt) {
 		// TODO 로또 번호 발행
 		
-	}
+		Set<Integer> lotto = new HashSet<Integer>();
+//		ArrayList<Integer> lottoBag = new ArrayList<Integer>();
+		int repeat = 0;
+		System.out.println("\n\n행운의 로또번호는 아래와 같습니다.");
+		int a = 1;
+
+		while(a <= amt) {
+			while(lotto.size() <= 6) {
+				lotto.add((int)(Math.random() * 25 - 1 + 1) + 1);
+			}
+			System.out.println("로또번호 " + a + "번 : " + lotto);
+			a++;
+		}
+		
+ 	}
 
 	public static void main(String[] args) {
 
