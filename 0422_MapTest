@@ -2,6 +2,7 @@ package kr.or.ddit.basic;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class MapTest {
@@ -54,6 +55,7 @@ public class MapTest {
 		System.out.println("반환된 삭제 value값을 받은 removeTel : " + removeTel);
 		
 		
+		map.put("tel", "010-1234-1234"); //삭제했으니까 다시 넣기
 		System.out.println("\n=================================\n");
 
 		
@@ -71,8 +73,9 @@ public class MapTest {
 		//방법 1.  keySet() 메소드 이용하기 : 맵의 모든 key값을 읽어와 Set형으로 반환하다
 		Set<String> keySet = map.keySet(); //map에서 key 값들을 갈 묻기
 		
+		System.out.println("keySet() 메소드 이용하기\n");
 		Iterator <String> it = keySet.iterator();
-		while(it.hasNext()) {
+		while(it.hasNext()) {//set에는 순서가 없으니까 순서대로 가져오려고 hasNext 사용
 			String key = it.next();
 			String value = map.get(key);
 			System.out.println(key + " : " + value);
@@ -82,10 +85,57 @@ public class MapTest {
 		System.out.println("\n=================================\n");
 		
 		
+		//방법 2. keySet을 향상된 for문으로 사용하기
+		System.out.println("keySet을 향상된 for문 이용하기\n");
+		
+		for(String key : keySet) {
+			String value = map.get(key);
+			System.out.println(key + " : " + value);
+		}
 		
 		
+		System.out.println("\n=================================\n");
+
 		
-	
+		//- value값 이용하기
+		
+		//방법 3. values() 메소드 ==> value값들만 읽어온다.
+		System.out.println("values() 메소드 이용하기\n");
+		
+		for(String value : map.values()) {
+			System.out.println(value);
+		}
+		
+		
+		System.out.println("\n=================================\n");
+
+		
+		//방법 4. Map에는 Entry라는 내부 class가 만들어져있다.
+		//이 클래스는 key라는 변수와 value라는 변수로 구성
+		//Map에서는 이 Entry 클래스를 Set 형식으로 저장하여 관리
+		
+		//Entry 객체 전체를 가져와 처리하기 -> 가져온 Entry 객체는 Set형식으로 되어있다.
+		//entrySet() 메소드 이용
+		System.out.println("entrySet() 메소드 이용하기\n");
+		
+		//Entry라는 내부객체 전체 가져오기
+		Set<Map.Entry<String, String>> mapSet = map.entrySet();
+		
+		//가져온 전체 Entry 객체를 처리할 때는 iterator나 향상된 for문을 이용해서 처리하면 됨
+		Iterator<Map.Entry<String, String>> enIt = mapSet.iterator();
+		while(enIt.hasNext()) {
+			Map.Entry<String, String> entry = enIt.next();
+			
+			System.out.println("key값 : " + entry.getKey());
+			System.out.println("value값 : " + entry.getValue() + "\n");
+		}
+		
+		
+		System.out.println("\n=================================\n");
+		
+		HashMap<String, Member> memberMap = new HashMap<String, Member>();
+		Member mem = new Member(1, "홍길동", "010-111-1111");
+		memberMap.put("회원1", mem);
 	
 	}
 
