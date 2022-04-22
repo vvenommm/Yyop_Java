@@ -1,0 +1,96 @@
+package kr.or.ddit.basic;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class LottoTestAnswer {
+	
+	Scanner scan = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		new LottoTestAnswer().lottoStart();
+
+	}
+	
+	public void lottoStart() {
+		while(true) {
+			int choice = displayMenu();
+			
+			switch(choice) {
+			case 1 :
+				buyLotto();
+				break;
+			case 2 : 
+				System.out.println("\n감사합니다...\n");
+				return;
+			default : 
+				System.out.println("작업 번호를 잘못 입력했습니다. 다시 입력하세요.");
+			}
+			
+			
+		}
+	}
+	
+	//로또 구매 처리하는 메소드
+	private void buyLotto() {
+		System.out.println("\nLotto 구입 시작\n");
+		System.out.println("(1000원에 로또번호 하나입니다.)");
+		System.out.print("금액입력 : ");
+		
+		int money = scan.nextInt();
+		
+		if(money < 1000) {
+			System.out.println("\n\n입력 금액이 너무 적습니다.\n로또번호 구매 실패!!");
+			return;
+		}else if(money > 101000) {
+			System.out.println("\n\n최대 100장까지 구매 가능합니다.\n로또번호 구매 실패!!");
+			return;
+		}
+	
+		////////////////////////////////////////////////////////////////////
+		//로또 구매 작업 시작
+		HashSet<Integer> lottoSet = new HashSet<Integer>();
+		
+		int count = money/1000; //구매할 매수
+		
+		System.out.println();
+		
+		for (int i = 0; i < count; i++) {//구매 매수만큼 반복
+			
+			//로또번호 생성
+			while(lottoSet.size() < 6) {
+				lottoSet.add((int)(Math.random() * 45 + 1 )); //난수를 만들어서 set에 추가
+			}
+			
+			ArrayList<Integer> lottoList = new ArrayList<Integer>(lottoSet);
+			Collections.sort(lottoList);
+			System.out.println("로또번호 " + (i+1) + " : " + lottoList);
+			
+			lottoSet.clear(); //set 데이터 비우기
+			
+		}
+		
+		System.out.println("받은 금액 " + money + "원이고, 거스름돈은 " + (money%1000) + "원 입니다.");
+		
+	}
+
+	
+	//메뉴를 출력하고 입력한 작업번호를 반환하는 메소드
+	private int displayMenu() {
+		System.out.println("\n\n\n==========================");
+		System.out.println("\tLotto 프로그램");
+		System.out.println("--------------------------");
+		System.out.println(" 1. Lotto 구입\n 2. 프로그램 종료");
+		System.out.println("==========================");
+		System.out.println("메뉴선택 : ");
+		
+		int start = scan.nextInt();
+		
+		return start;
+	}
+
+}
