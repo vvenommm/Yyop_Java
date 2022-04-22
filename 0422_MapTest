@@ -1,10 +1,92 @@
 package kr.or.ddit.basic;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
 public class MapTest {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		/*
+			Map 객체 : Key 값과 Value 값을 한 쌍으로 관리하는 객체
+			- key값의 특징 : 중복을 허용하지 않고 순서(index)가 없다.
+			- value값의 특징 : 중복을 허용한다.
+		 */
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		//자료 추가 : put(Key값, Value값)
+		map.put("name", "홍길동");
+		map.put("addr", "대전");
+		map.put("tel", "010-1234-1234");
+		
+		System.out.println("map : " + map);
+		
+		
+		System.out.println("\n=================================\n");
+		
+		
+		//자료 수정 -> 데이터를 추가할 때 key값이 같으면 나중에 입력한 값이 저장됨
+		map.put("addr", "서울");
 
+		System.out.println("map에 addr/서울 추가한 후 : " + map);
+		
+		
+		System.out.println("\n=================================\n");
+		
+		
+		//자료 읽기 : get(key값) -> 주어진 key값에 맞는 value값을 반환
+		System.out.println("map.get(name)을 입력하면 '" + map.get("addr") + "' 값이 출력 된다.");
+
+		System.out.println("이름 : " + map.get("name"));
+		System.out.println("주소 : " + map.get("addr"));
+		System.out.println("전화 : " + map.get("tel"));
+	
+	
+		System.out.println("\n=================================\n");
+
+		
+		//자료 삭제 : remove(key값) -> key값이 같은 자료를 찾아서 삭제. 반환값은 삭제되는 데이터의 value값
+		
+		
+		String removeTel = map.remove("tel");
+		System.out.println("tel 삭제 후의 map : " + map);
+		System.out.println("반환된 삭제 value값을 받은 removeTel : " + removeTel);
+		
+		
+		System.out.println("\n=================================\n");
+
+		
+		//key값이 존재하는지 여부를 검사하는 메소드 : containskey(Key값) -> 주어진 key 값이 있으면 true, 없으면 false 반환
+		System.out.println("tel 키값의 존재 여부 : " + map.containsKey("tel"));
+		System.out.println("name 키값의 존재 여부 : " + map.containsKey("name"));
+		
+		
+		System.out.println("\n=================================\n");
+
+		
+		//맵에 저장된 모든 데이터를 읽어와 사요하는 방법부터
+
+		//- key값 이용하기
+		//방법 1.  keySet() 메소드 이용하기 : 맵의 모든 key값을 읽어와 Set형으로 반환하다
+		Set<String> keySet = map.keySet(); //map에서 key 값들을 갈 묻기
+		
+		Iterator <String> it = keySet.iterator();
+		while(it.hasNext()) {
+			String key = it.next();
+			String value = map.get(key);
+			System.out.println(key + " : " + value);
+		}
+		
+		
+		System.out.println("\n=================================\n");
+		
+		
+		
+		
+		
+	
+	
 	}
 
 }
