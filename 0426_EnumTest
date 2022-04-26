@@ -1,0 +1,151 @@
+package kr.or.ddit.basic;
+
+/*
+	enum (열거형) => 서로 관련있는 상수들의 집합을 나타낸다.
+				  => 클래스처럼 보이게 하는 상수
+	- 작성 방법
+	: 클래스처럼 독립된 java 파일에 만들 수 있고, 하나의 java파일에 클래스와 같이 만들 수 있고,
+	  클래스 안에 내부 클래스처럼 만들 수 있다.
+	  
+	- 열거형 속성 및 메소드
+	1) name() : 열거형 상수의 이름을 무낮열로 반환한다.
+	2) original() : 열거형 상수가 정의된 순서값(index값)을 반환한다.(0부터 시작)
+	3) valueOf("열거형상수명") : valueOf() 메소드와 결과가 같다.
+	
+	- 열거형 상수 정의하기
+	방법1)
+		enum 열거형이름{상수명1, 상수명2, 상수명3, ...}
+		
+	방법2) 열거형 상수에 값을 지정해서 사용할 때
+		enum 열거형 이름{
+			상수명1 (값들...),
+			상수명2 (값들...),
+			...
+			상수명n (값들...);
+			
+			//'값들'이 저장될 변수들을 선언한다.
+			private 자료형이름 변수명;
+			...
+			
+			
+			//열거형의 생성자를 만든다.
+			//열거형의 생성자는 '열거형 상수'에 '값들'을 세팅하는 역할을 수행한다.
+			//열거형의 생성자는 묵시적으로 private이다.
+			
+			private 열거형이름(자료형 변수명, ...){
+			
+			}
+		}
+ */
+
+public class EnumTest {
+
+	public enum Color {RED, GREEN, BLUE}
+
+	public enum Count {ONE, TWO, THREE}
+	
+	//상수명 (값들...) 형식의 선언
+	public enum Season{
+		봄("3월부터 5월까지", 15),
+		여름("6월부터 8월까지", 30),
+		가을("9월부터 11월까지", 20),
+		겨울("12월부터 2월까지", 0);
+		
+		//값들이 저장될 변수 선언
+		private String span;
+		private int temp;
+		
+		//생성자
+		Season(String months, int data) { //private Season(String months, int data)와 같다.
+			
+			//변수 초기화
+			span = months;
+			temp = data;
+		}
+		
+		//getter 메소드를 작성한다
+		public String getSpan() {
+			return this.span;
+		}
+		
+		public int getTemp() {
+			return this.temp;
+		}
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("RED => " + ConstTest.RED);
+		
+		System.out.println("\n===================================\n");
+		
+		System.out.println("THREE => " + ConstTest.THREE);
+
+		System.out.println("\n===================================\n");
+
+		//1과 2의 비교. 논리적으로 맞지 않는 것. 상수를 보면 색상과 관련된 상수가 있고 카운트와 관련된 상수가 있다. 성격이 원래 다른 상수. 쓰임새가 다른 두 개를 갖고 비교를 하는 것
+		if(ConstTest.RED == ConstTest.TWO) {
+			System.out.println("@@@@@@@@@@@@@@@@@@");
+		}else {
+			System.out.println("&&&&&&&&&&&&&&&&&&");
+		}
+		
+		System.out.println("\n===================================\n");
+
+		Color mycol = Color.valueOf("GREEN"); //Color.Green과 같다.
+		Count mycnt = Count.ONE; //Count.valueOf("ONE")과 같다.
+		
+		System.out.println("mycol : " + mycol.name());
+		System.out.println("mycnt : " + mycnt.name());
+		
+		System.out.println("\n===================================\n");
+
+		System.out.println("mycol의 ordinal : " + mycol.ordinal());
+		System.out.println("mycnt의 ordinal : " + mycnt.ordinal());
+		
+		System.out.println("\n===================================\n");
+
+		//서로 다른 열거형끼리는 비교 불가
+//		if(Color.RED == Count.ONE) {
+//			System.out.println("...");
+//		}
+		
+		if(mycol == Color.GREEN) {
+			System.out.println("같다...");
+		}
+		
+		System.out.println("\n===================================\n");
+
+		//열거형을 switch문에서 사용할 수 있다.
+		switch(mycnt) {
+			//case Count.ONE : 	System.out.println("ONE")-> switch문의 case에 열거형 상수를 지정할 때에는 "열거형"이름은 생략하고 "상수명"만 기술한다. 그리고 저건 잘못 사용한 예
+		case ONE : System.out.println("..ONE.."); break;
+		case TWO : System.out.println("..TWO.."); break;
+		case THREE : System.out.println("..THREE.."); break;
+		}
+		
+		System.out.println("\n===================================\n");
+		
+		Season ss = Season.valueOf("봄");
+		System.out.println("name : " + ss.name());
+		System.out.println("ordinal : " + ss.ordinal());
+		System.out.println("span : " + ss.getSpan());
+		System.out.println("temp : " + ss.getTemp());
+		
+		System.out.println("\n===================================\n");
+
+		//열거형이름.values() => 모든 상수들을 배열로 반환
+		for(Season s : Season.values()) {
+			System.out.println(s.name() + " == " + s + " ==> " + s.getSpan() + " : " + s.getTemp());
+		}
+		
+		System.out.println("\n===================================\n");
+
+		for(Color col : Color.values()) {
+			System.out.println(col.name() + " ==> " + col.ordinal());
+		}
+		
+	}
+
+}
