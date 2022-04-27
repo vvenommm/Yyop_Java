@@ -1,0 +1,63 @@
+package kr.or.ddit.basic;
+
+/*
+	10마리의 말들이 경주하는 경마 프로그램을 작성해보자
+	말은 Horse라는 이름의 스레드 클래스를 작성하는데, 이 클래스는 말이름(String), 등수(int), 현재위치(int)를 멤버변수로 갖는다.
+	그리고 이 클래스에는 등수를 오름차순으로 처리할 수 있는 내부 정렬 기준이 있다.
+	
+	경기 구간은 1 ~ 50 구간으로 되어 있다. 말의 현재 위치는 현재 말이 달리고 있는 구간을 말한다.
+	
+	경기가 진행 되는 중 각 말들의 위치를 아래와 같이 나타내시오.
+	예)
+	01번말 : --->----------------------
+	02번말 : ------>-------------------
+	03번말 : ->------------------------
+	...
+	nn번말 : -------->-----------------
+	
+	경기가 끝나면 등수 순으로 출력한다.
+ */
+
+public class ThreadTest11 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+
+
+class Horse implements Comparable<Horse>, Runnable{
+	String name = "";
+	int rank = 0;
+	int spot = 0;
+	
+	public Horse(String name, int rank, int spot) {
+		super();
+		this.name = name;
+		this.rank = rank;
+		this.spot = spot;
+	}
+
+	public int getSpot() {
+		return spot;
+	}
+
+	public void setSpot(int spot) {
+		this.spot = spot;
+	}
+	
+	//오름차순
+	@Override
+	public int compareTo(Horse h) {
+		return Integer.compare(this.getSpot(), h.getSpot());
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
