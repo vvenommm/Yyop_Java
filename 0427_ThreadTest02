@@ -12,9 +12,29 @@ public class ThreadTest03 {
 		
 		th.start();
 		
+		try {
+			th.join();
+		}catch (InterruptedException e) { //현재 실행 중인 스레드에서 대상이 되는 스레드(여기에선 th변수)가 끝날 때까지 기다린다.
+			// TODO: handle exception
+		}
+		
 		long endTime = System.currentTimeMillis();
 		
 		System.out.println("경과시간 : " + (endTime - startTime));
+		
+		/*
+		long startTime = System.currentTimeMillis();
+		
+		th.start();
+		
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println("경과시간 : " + (endTime - startTime));
+		
+		위와 같이 적으면 start는 시작하고 바로 끝나며 run() 스레드만 실행중이게 됨.
+		그래서 경과시간이 0으로 잡히게 됨. 스레드가 끝나는 시간을 재는 걸로 바꿔줘야 함 -> try&catch와 join()메소드 사용
+		
+		 */
 
 	}
 
@@ -25,7 +45,7 @@ class MyRunner implements Runnable{
 	@Override
 	public void run() {
 		long sum = 0L;
-		for (long i = 1L; i < 1_000_000_000L; i++) {
+		for (long i = 1L; i <= 1_000_000_000L; i++) {
 			sum += i;
 		}
 		System.out.println("합계 : " + sum);
