@@ -1,75 +1,49 @@
 package kr.or.ddit.basic;
 
-
-//쓰레드의 상태를 출력하는 예제
-public class ThreadTest09 {
+public class ThreadTest08 {
 
 	public static void main(String[] args) {
-		TargetThread target = new TargetThread();
+		AutoSave auto = new AutoSave();
 		
-		displayThreadState th = new displayThreadState(target);
+		//데몬 스레드로 설정하기 -> 반드시 start() 메소드 호출 전에 설정해야 함
+		auto.setDaemon(true);
 		
-		th.start();
-
-	}
-
-}
-
-//TargetThread의 상태값을 출력하는 스레드
-class displayThreadState extends Thread{
-	private TargetThread target;
-
-	//생성자
-	public displayThreadState(TargetThread target) {
-//		super();
-		this.target = target;
-	}
-	
-	@Override
-	public void run() {
-		while(true) {
-			//스레드의 현재 상태값 구하기
-			Thread.State state = target.getState();
-			System.out.println("TargetThread의 상태값 : " + state);
-			
-			if(state == Thread.State.NEW) {  // 쓰레드의 상태가 NEW상태이면...
-				target.start();
-			}
-			
-			if(state == Thread.State.TERMINATED) {  // 쓰레드의 상태가 종료 상태이면..
-				break;		// 반복문을 빠져나간다.
-			}
-			
+		auto.start();
+		
+		for (int i = 1; i <= 20; i++) {
+			System.out.println(i);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO: handle exception
 			}
 		}
+		
+		
+		System.out.println("main 스레드 종료.");
 	}
-	
-	
+
 }
 
-//쓰레드 상태의 검사 대상이 되는 스레드
-class TargetThread extends Thread{
+
+
+//자동 저장하는 쓰레드(3초에 한 번씩 자동 저장하는 쓰레드)
+class AutoSave extends Thread{
+	
+	//작업 내용을 저장하는 메소드
+	public void save() {
+		System.out.println("작업 내용을 저장합니다.");
+	}
+	
 	@Override
 	public void run() {
-		for(long i = 1L; i < 1_000_000_000L; i++) { //시간 지연용. 실행 중인 것들이 잔뜩 있다는 의미로 i의 최대값을 저렇게 정해줌
-			
+		while(true) {//무한루프 형식의 반복문을 만든다.
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO: handle exception
+			}
+			save();
 		}
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO: handle exception
-		}
-			
-		for(long i = 1L; i <= 10_000_000_000L; i++) {//시간 지연용
-			
-		}
-		
 	}
 }
-
-
-
