@@ -52,6 +52,31 @@ public class ThreadTest02 {
 		MyThread2 r = new MyThread2(); //인스턴스 생성
 		Thread th2 = new Thread(r); //Thread 객체 생성
 		th2.start();
+		
+		//start는 스레드가 실행될 환경을 만들어줌. start 메소드 안에 run을 호출하는 명령어가 있음
+		
+		System.out.println("메인 메소드 끝!");
+		//멀티 스레드 프로그램은 메인 뿐만 아니라 다른 스레드의 run() 메소드도 끝나야 끝남
+
+		//방법2-2 : 익명구현체(interface)를 이용하는 방법
+		Runnable r2 = new Runnable() {
+			
+			@Override
+			public void run() {
+				for(int i = 1; i <= 200; i++) {
+					System.out.print("@");
+					try {
+						Thread.sleep(100);
+					}catch (InterruptedException e) {
+						// TODO: handle exception
+					}
+				}
+			}
+			
+		};
+		Thread th3 = new Thread(r2);
+		th3.start();
+		
 	}
 
 }
@@ -94,3 +119,5 @@ class MyThread2 implements Runnable{
 		}
 	}
 }
+
+
