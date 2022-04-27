@@ -1,0 +1,15 @@
+package kr.or.ddit.basic;
+
+/*
+	1 ~ 20억까지의 합계를 구하는 프로그램을 하나의 스레드가 단독으로 처리할 때와
+	여러 개의 스레드가 협력해서 처리할 때의 경과 시간을 비교해보자.
+ */
+
+public class ThreadTest04 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
