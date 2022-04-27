@@ -1,0 +1,76 @@
+package kr.or.ddit.basic;
+
+import javax.swing.JOptionPane;
+
+public class ThreadTest05 {
+
+	public static void main(String[] args) {
+		// 사용자로부터 데이터 입력 받기
+//		String str = JOptionPane.showInputDialog("아무거나 입력하세요");
+//		System.out.println("입력한 값 : "+ str);
+		//입력하기 전까지는 일시정지 상태
+		
+		for (int i = 10; i  >= 1; i--) {
+			System.out.println(i);
+			try {
+				Thread.sleep(1000); //1초동안 일시정지
+			} catch (InterruptedException e) {
+				// TODO: handle exception
+			}
+			
+		}
+
+	}
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+
+
+
+package kr.or.ddit.basic;
+
+import javax.swing.JOptionPane;
+
+public class ThreadTest06 {
+
+	public static void main(String[] args) {
+
+		Thread th1 = new DataInput();
+		Thread th2 = new CountDown();
+		
+		th1.start();
+		th2.start();
+	}
+
+}
+
+
+//데이터를 입력하는 스레드
+class DataInput extends Thread{
+	@Override
+	public void run() {
+		String str = JOptionPane.showInputDialog("아무거나 입력하세요");
+		
+		System.out.println("입력한 값 : "+ str);
+	}
+}
+
+
+//카운트 다운 진행하는 스레드
+class CountDown extends Thread{
+	@Override
+	public void run() {
+		for (int i = 10; i  >= 1; i--) {
+			System.out.println(i);
+			try {
+				Thread.sleep(1000); //1초동안 일시정지
+			} catch (InterruptedException e) {
+				// TODO: handle exception
+			}
+		}
+		System.out.println("10초가 지났습니다. 프로그램을 종료합니다.");
+		System.exit(0);
+	}
+}
