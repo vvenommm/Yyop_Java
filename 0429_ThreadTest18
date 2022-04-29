@@ -1,0 +1,92 @@
+package kr.or.ddit.basic;
+
+public class ThreadTest18 {
+
+	public static void main(String[] args) {
+		// wait(), notify()를 이용한 두 스레드에서 번갈아 한 번씩 실행하는 예제
+		// wait(), notify(), notifyAll()은 동기화 영역에서만 사용 가능하다.
+
+		WorkObject workObj = new WorkObject();
+		
+		ThreadA th1 = new ThreadA(workObj);
+		ThreadB th2 = new ThreadB(workObj);
+		
+		th1.start();
+		th2.start();
+	}
+
+}
+
+
+
+
+//WorkObject의 a()메소드를 호출하는 스레드
+class ThreadA extends Thread{
+	private WorkObject workObj;
+	
+	public ThreadA(WorkObject workObj) {
+		this.workObj = workObj;
+	}
+	
+	@Override
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			workObj.a(); //a()메소드 호출
+		}
+		
+		synchronized(workObj) {
+			workObj.notify();
+		}
+	}
+}
+
+class ThreadB extends Thread{
+	private WorkObject workObj;
+	
+	public ThreadB(WorkObject workObj) {
+		this.workObj = workObj;
+	}
+	
+	@Override
+	public void run() {
+		for (int i = 0; i < 10; i++) {
+			workObj.b(); //a()메소드 호출
+		}
+		
+		synchronized(workObj) {
+			workObj.notify();
+		}
+	}
+}
+
+
+
+//공통으로 사용할 클래스
+class WorkObject{
+	public synchronized void a () { //synchronized 없으면 오류남
+		System.out.println("a() 메소드 실행중...");
+		
+		notify();
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public synchronized void b () {
+		System.out.println("b() 메소드 실행중...");
+		
+		//b를 깨워주는 게 없어서 끝나지 않음
+		notify();
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
+	
+	
+}
