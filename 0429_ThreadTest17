@@ -1,0 +1,60 @@
+package kr.or.ddit.basic;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Vector;
+
+//벡터는 동기화 처리가 내부적으로 되어 있다. 과연 그런지 알아보자!
+
+public class ThreadTest17 {
+	private Vector<Integer> vec = new Vector<Integer>();
+	
+	//동기화 처리가 안 된 List
+	private List<Integer> list1 = new ArrayList<Integer>();
+	
+	public void myStart() {
+		
+		//익명 구현체 만들기
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				for(int i = 0; i < 10000; i++) {
+//					vec.add(i);
+					
+				}
+			}
+		};
+		
+		Thread[] ths = new Thread[] {
+				new Thread(r),
+				new Thread(r),
+				new Thread(r),
+				new Thread(r),
+				new Thread(r)
+		};
+		
+		for (Thread th : ths) {
+			th.start();
+		}
+		
+		for (Thread th : ths) {
+			try {
+				th.join();
+			} catch (InterruptedException e) {
+				// TODO: handle exception
+			}
+		}
+		
+		System.out.println("vec의 개수 : " + vec.size());
+		System.out.println("list1의 개수 : " + list1.size());
+	
+	 }
+
+	public static void main(String[] args) {
+		new ThreadTest17().myStart(); //static은 되도록 안 쓰는게 좋아서 myStart라는 메소드를 만들어줌
+		
+		
+		
+	}
+
+}
