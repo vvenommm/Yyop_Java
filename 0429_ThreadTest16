@@ -23,7 +23,7 @@ public class ThreadTest16 {
 	}
 	
 	//출금하는 메소드(반환값 -> 출금성공 = true, 출금실패 = false)
-	public boolean withdraw(int money) {
+	public synchronized boolean withdraw(int money) {
 		if(balance >= money) {
 			for (int i = 1; i <= 10_000_000; i++); //공회전 : 다른 스레드가 개입할 여지를 주기 위해
 				balance -= money;
@@ -33,6 +33,20 @@ public class ThreadTest16 {
 			return false;
 		}
 	}
+	/* 혹은 이렇게 해도 됨
+		public boolean withdraw(int money) {
+			synchronized(this){
+			if(balance >= money) {
+				for (int i = 1; i <= 10_000_000; i++); //공회전 : 다른 스레드가 개입할 여지를 주기 위해
+					balance -= money;
+					System.out.println("메소드 안에서 balance = " + balance);
+					return true;
+			}else {
+			return false;
+			}
+		}
+	}
+	 */
 
 
 	public static void main(String[] args) {
