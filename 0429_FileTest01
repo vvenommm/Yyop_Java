@@ -43,8 +43,51 @@ public class FileTest01 {
 		System.out.println("디렉토리인 부분??? -> " + file5.isDirectory());
 		System.out.println("파일인 부분적인 부분?? -> " + file5.isFile());
 		
+		System.out.println("\n--------------------------------------------------\n");
 		
+		//디렉토리(폴더) 만들기
+		/*
+			mkdir() -> File 객체의 경로 중 마지막 위치의 디렉토리를 만든다.
+					-> 반환값 : 만들기 성공(true), 만들기 실패(false)
+					-> 중간 부분의 경로가 모두 만들어져 있어야 마지막 위치를 경로로 만들 수 있다.
+					
+			mkdirs() -> 중간 부분의 경로가 없으면 중간 부분의 경로도 같이 만들어 준다.
+		 */
+		
+		File file6 = new File("d:/02_HighJava/Other/연습용");
+		System.out.println("파일명6 : " + file6.getName());
+		System.out.println("디렉토리인 부분??? -> " + file6.isDirectory());
+		System.out.println("파일인 부분적인 부분?? -> " + file6.isFile());
+		System.out.println("=> 실재 존재하지 않는 파일 혹은 폴더이기 때문에 false가 반환");
+		System.out.println(file6.getName() + "의 존재여부 : " + file6.exists());
+		
+		System.out.println("\n--------------------------------------------------\n");
+
+		//file6 만들기
+		if(!file6.exists()) {
+			
+			if(file6.mkdir()) {
+				System.out.println(file6.getName() + " 만들기 성공!!!");
+			}else {
+				System.out.println("띠로리~~~ " + file6.getName() + " 만들기 실패!!!");
+			}
+		}
+		
+		System.out.println("\n--------------------------------------------------\n");
+		
+		File file7 = new File("d:/02_HighJava/Other/test/src");
+
+		if(!file7.exists()) {
+			
+			if(file7.mkdirs()) {
+				System.out.println(file7.getName() + " 만들기 성공!!!");
+			}else {
+				System.out.println("띠로리~~~ " + file7.getName() + " 만들기 실패!!!");
+			}
+		}
+		
+
+	
 	}
 
 }
-
