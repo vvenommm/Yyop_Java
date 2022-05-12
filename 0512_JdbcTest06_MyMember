@@ -87,6 +87,10 @@ public class JdbcTest06 {
 				break;
 				
 			case 0: //0. 작업 끝
+				if(prest != null) try {prest.close();} catch (SQLException e) {}
+				if(stat != null) try {stat.close();} catch (SQLException e) {}
+				if(conn != null) try {conn.close();} catch (SQLException e) {}
+				if(rset != null) try {rset.close();} catch (SQLException e) {}
 				System.out.println("Goodbye--☆★");
 				System.exit(0);
 
@@ -130,10 +134,34 @@ public class JdbcTest06 {
 	private void dataUpdate() {
 		// TODO 3. 자료 수정
 		
-		String sql = "";
+		String sql = "SELECT COUNT(*) COUNT FROM MYMEMBER WHERE MEM_ID = ?";
+		String id;
 		
-		System.out.println("수정하려는 정보 ID 입력 : ");
-		String id = scan.nextLine();
+		while (true) {
+			System.out.println("수정하려는 정보 ID 입력 : ");
+			id = scan.nextLine();
+
+			try {
+				prest = conn.prepareStatement(sql);
+				prest.setNString(1, id);
+
+				rset = prest.executeQuery();
+
+				int dup = 0;
+				if (rset.next()) {
+					dup = rset.getInt("COUNT");
+				}
+
+				if (dup == 0) {
+					System.out.println("존재하는 ID가 아닙니다.");
+				} else {
+					break;
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		
 		System.out.println("수정하려는 항목을 선택해주세요.\n[1.비밀번호 2.이름 3.전화번호 4.주소]");
 		int choice = Integer.parseInt(scan.nextLine());
@@ -242,11 +270,37 @@ public class JdbcTest06 {
 
 	private void dataDelete() {
 		// TODO 자료 삭제 -> delete
+
+		String sql = "SELECT COUNT(*) COUNT FROM MYMEMBER WHERE MEM_ID = ?";
+		String id = "";
+		while (true) {
+			System.out.println("삭제하려는 정보 ID 입력 : ");
+			id = scan.nextLine();
+
+			try {
+				prest = conn.prepareStatement(sql);
+				prest.setNString(1, id);
+
+				rset = prest.executeQuery();
+
+				int dup = 0;
+				if (rset.next()) {
+					dup = rset.getInt("COUNT");
+				}
+
+				if (dup == 0) {
+					System.out.println("존재하는 ID가 아닙니다.");
+				} else {
+					break;
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 		
-		System.out.println("삭제하려는 정보 ID 입력 : ");
-		String id = scan.nextLine();
+		sql = "DELETE FROM MYMEMBER WHERE MEM_ID = ?";
 		
-		String sql = "DELETE FROM MYMEMBER WHERE MEM_ID = ?";
 		try {
 			prest = conn.prepareStatement(sql);
 			prest.setString(1, id);
