@@ -1,0 +1,31 @@
+package tcp;
+
+import java.io.DataInputStream;
+import java.net.Socket;
+
+//이 클래스(스레드)는 소켓을 통해 메시지를 받아 화면에 출력하는 역할 담당
+public class Receiver extends Thread{
+	private Socket socket;
+	private DataInputStream dataIn;
+	
+	public Receiver(Socket socket) {
+		this.socket = socket;
+		try {
+			dataIn = new DataInputStream(this.socket.getInputStream());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	//////////////////////////////////////////////
+	
+	@Override
+	public void run() {
+		while(dataIn != null) {
+			try {
+				System.out.println(dataIn.readUTF());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
+}
