@@ -1,12 +1,13 @@
 package jdbcBasic;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+
+import util.DBUtil;
 
 /*
 	LPROD 테이블에 새로운 데이터 추가하기
@@ -30,7 +31,8 @@ public class JdbcTest05 {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ljh", "java");
+//			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ljh", "java");
+			conn= DBUtil.getConnection();
 
 			while (true) {
 
@@ -41,30 +43,29 @@ public class JdbcTest05 {
 				String nm = scan.nextLine();
 
 				////////////////////////////////////////////////////
-				System.out.println("1");
-				String sql = "SELECT MAX(LPROD_ID) ID FROM LPROD";
+				String sql = "SELECT MAX(NVL(LPROD_ID)) ID FROM LPROD";
 				stat = conn.createStatement();
 				rSet = stat.executeQuery(sql);
 				
+				
+				//select한 결과가 1개의 레코드일 경우에는 반복문보다는 if문으로 데이터를 확인
 				int id = 0;
-				while(rSet.next()) {
+				if(rSet.next()) {
 					id = rSet.getInt("ID") + 1;
+					//아니면 rSet.getInt(1) + 1; 컬럼 번호 사용
 				}
-				System.out.println("2");
 
 				////////////////////////////////////////////////////
 
 				String sql2 = "SELECT COUNT(*) count FROM LPROD WHERE LPROD_GU = '" + gu + "'";
 				rSet = stat.executeQuery(sql2);
-				System.out.println("3");
 
 				int count = 0;
-				while(rSet.next()) {
+				if(rSet.next()) {
 					count = rSet.getInt("count");
 				}
 
 				////////////////////////////////////////////////////
-				System.out.println("4");
 
 				if (count != 0) {
 					System.out.println("이미 존재하는 상품코드입니다.");
