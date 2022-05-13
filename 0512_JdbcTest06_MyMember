@@ -34,7 +34,7 @@ public class JdbcTest06 {
 	Scanner scan = new Scanner(System.in);
 	static Connection conn;
 	static Statement stat;
-	static PreparedStatement prest;
+	static PreparedStatement prest; //컴파일을 미리 함(statement와의 차이점) -> 그래서 sql문이랑 prest = conn.preparedStatement(sql);문은 반복문 밖에 둬서 한 번만 컴파일 하면 그대로 컴파일 된 채로 남아있기에 반복문에 넣을 필요 없다.
 	static ResultSet rset;
 
 	public static void main(String[] args) {
@@ -80,6 +80,7 @@ public class JdbcTest06 {
 				
 			case 3: //3. 자료 수정
 				dataUpdate();
+				dataUpdate2();
 				break;
 				
 			case 4: //4. 전체 출력
@@ -87,10 +88,7 @@ public class JdbcTest06 {
 				break;
 				
 			case 0: //0. 작업 끝
-				if(prest != null) try {prest.close();} catch (SQLException e) {}
-				if(stat != null) try {stat.close();} catch (SQLException e) {}
-				if(conn != null) try {conn.close();} catch (SQLException e) {}
-				if(rset != null) try {rset.close();} catch (SQLException e) {}
+				disconnect();
 				System.out.println("Goodbye--☆★");
 				System.exit(0);
 
@@ -100,6 +98,112 @@ public class JdbcTest06 {
 			}
 		}
 	}
+
+	private void disconnect() {
+		// TODO Auto-generated method stub
+		if(prest != null) try {prest.close();} catch (SQLException e) {}
+		if(stat != null) try {stat.close();} catch (SQLException e) {}
+		if(conn != null) try {conn.close();} catch (SQLException e) {}
+		if(rset != null) try {rset.close();} catch (SQLException e) {}
+	}
+
+
+	private void dataUpdate2() {
+		// TODO Auto-generated method stub
+		System.out.println();
+		System.out.print("변경할 아이디  > ");
+		String id = scan.next();
+
+		// id가 존재하는지 아닌지 확인 (count가 0이면 없는사람)
+		int count = getMemberCount(id);
+
+		if (count == 0) {// 등록되어있지 않는 사람
+			System.out.println("등록되어있지 않는 아이디입니다.");
+			System.out.println("수정작업을 종료합니다.");
+			return;
+		}
+
+		// 원하는 항목을 선택하기 위한 숫자변수와 수정할 부분의 컬럼명이 들어갈 string변수
+		// update mymember set 컬럼명 = 변경할 값 where mem_id = 변경할id;
+
+		int num;
+		String updateField = null;
+		String updateTitle = null;
+		do {
+			System.out.println("수정하려는 항목을 선택해주세요.\n[1.비밀번호 2.이름 3.전화번호 4.주소]");
+			num = Integer.parseInt(scan.nextLine());
+
+			switch (num) {
+			case 1:
+				updateField = "mem_pass";
+				updateTitle = "비밀번호";
+				break;
+			case 2:
+				updateField = "mem_name";
+				updateTitle = "이름";
+				break;
+			case 3:
+				updateField = "mem_tel";
+				updateTitle = "전화번호";
+				break;
+			case 4:
+				updateField = "mem_addr";
+				updateTitle = "주소";
+				break;
+			default:
+				System.out.println("없는 항목");
+			}
+		} while (num < 1 || num > 4);
+
+		System.out.println();
+		scan.nextLine(); // 버퍼 비우기
+		System.out.println("새로운 " + updateTitle + " >> ");
+		String updateData = scan.nextLine();
+
+		try {
+			conn = DBUtil.getConnection();
+
+			String sql = "UPDATE MYMEMBER SET " + updateField + " = ? where mem_id = ? ";
+			prest = conn.prepareStatement(sql);
+			prest.setNString(1, updateData);
+			prest.setString(2, id);
+
+			count = prest.executeUpdate();
+
+			if (count > 0) {
+				System.out.println(id + " 회원의 " + updateField + "를 수정했습니다.");
+			} else {
+				System.out.println("수정 작업 실패!!!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+
+	}
+
+
+	private int getMemberCount(String id) {
+		String sql = "SELECT COUNT(*) COUNT FROM MYMEMBER WHERE MEM_ID = ?";
+		int count = 0;
+		try {
+			prest = conn.prepareStatement(sql);
+			prest.setNString(1, id);
+
+			rset = prest.executeQuery();
+
+			if (rset.next()) {
+				count = rset.getInt("COUNT");
+			}
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return count;
+	}
+
 
 	///////////////////////////////////////////////////////////////////
 	
@@ -115,11 +219,13 @@ public class JdbcTest06 {
 		try {
 			stat = conn.createStatement();
 			rset = stat.executeQuery(sql);
-			System.out.println("=======================================================================================");
+			System.out.println("===========================================================");
+			System.out.println(" 아이디\t비밀번호\t이름\t전화번호\t주소");
 			while(rset.next()) {
-				System.out.println("아이디 : " + rset.getString("ID") + " 비밀번호 : " + rset.getString(2) + " 이름 : " + rset.getString("NM") + " 전화번호 : " + rset.getString(4) + " 주소 : " + rset.getString("ADDR") + "\n -------------------------------------------------------------------------------------");
+				System.out.println(" " + rset.getString("ID") + "\t" + rset.getString(2) + "\t" + rset.getString("NM") + "\t" + rset.getString(4) + "\t" + rset.getString("ADDR"));
+				System.out.println("-------------------------------------------------------");
 			}
-			System.out.println("=======================================================================================\n");
+			System.out.println("===========================================================");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
