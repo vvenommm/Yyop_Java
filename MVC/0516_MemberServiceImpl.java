@@ -14,7 +14,8 @@ public class MemberServiceImpl implements IMemberService {
 	private IMemberDao dao; //DAO 객체가 저장될 변수 선언
 	
 	public MemberServiceImpl() {
-		dao = new MemberDaoImpl();
+//		dao = new MemberDaoImpl(); //싱글톤으로 바꾸면 바로 new 객체생성 불가라 오류
+		dao = MemberDaoImpl.getInstance();
 	}    
 
 	@Override
