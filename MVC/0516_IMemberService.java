@@ -3,6 +3,7 @@ package mvcService;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import mvcVo.MemberVO;
 
@@ -58,4 +59,13 @@ public interface IMemberService {
 	 * @return 검색된 회원 ID 개수
 	 */
 	public int getMemberCount(String memId);
+	
+	/**
+	 * Map의 정보를 이용하여 회원 정보 중 원하는 컬럼을 수정하는 메소드
+	 * key값 정보 -> 회원ID(memid), 수정할컬럼명(field), 수정할데이터(data)
+	 * 
+	 * @param paramMap회원ID, 수정할 컬럼명, 수정할 데이터가 저장될 객체
+	 * @return
+	 */
+	public int updateMember2(Map<String, String> paramMap);
 }
