@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import mvcVo.MemberVO;
 
@@ -75,10 +76,11 @@ public class MemberDaoImpl implements IMemberDao{
 		while(rset.next()) {
 			MemberVO memVo = new MemberVO();
 			memVo.setMem_id(rset.getNString("mem_id"));
-			memVo.setMem_id(rset.getString("mem_pass"));
-			memVo.setMem_id(rset.getNString("mem_name"));
-			memVo.setMem_id(rset.getNString("mem_tel"));
-			memVo.setMem_id(rset.getNString("mem_addr"));
+			memVo.setMem_pass(rset.getString("mem_pass"));
+			memVo.setMem_name(rset.getNString("mem_name"));
+			memVo.setMem_tel(rset.getNString("mem_tel"));
+			memVo.setMem_addr(rset.getNString("mem_addr"));
+			all.add(memVo);
 		}
 		
 		if(stat != null) {stat.close();}
@@ -89,14 +91,37 @@ public class MemberDaoImpl implements IMemberDao{
 
 	@Override
 	public int getMemberCount(Connection conn, String memId) throws SQLException {
-		String sql = "SELECT COUNT(*) FROM MYMEMBER WHERE MEM_ID = ?";
+		String sql = "SELECT COUNT(*) CNT FROM MYMEMBER WHERE MEM_ID = ?";
 		PreparedStatement prest = conn.prepareStatement(sql);
 		
 		prest.setNString(1, memId);
 		
-		int cnt = prest.executeUpdate();
+		ResultSet rset = prest.executeQuery();
+		
+		int cnt = 0;
+		
+		if(rset.next()) {
+			cnt = rset.getInt("CNT");
+		}
 		
 		if(prest != null) {prest.close();}
+		if(rset != null) {rset.close();}
+		
+		return cnt;
+	}
+
+	@Override
+	public int updateMember2(Connection conn, Map<String, String> paramMap) throws SQLException {
+		//key값 정보 -> 회원ID(memId), 수정할컬럼명(field), 수정할데이터(data)
+		String sql = "UPDATE MYMEMBER SET " + paramMap.get("field") + " = ? " + " WHERE MEM_ID = ?";
+		
+		PreparedStatement prest = conn.prepareStatement(sql);
+		prest.setString(1, paramMap.get("data"));
+		prest.setString(2, paramMap.get("memId"));
+		
+		int cnt = prest.executeUpdate();
+		
+		if(prest != null) prest.close();
 		
 		return cnt;
 	}
