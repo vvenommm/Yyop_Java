@@ -3,6 +3,7 @@ package mvcDao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import mvcVo.MemberVO;
 
@@ -68,4 +69,16 @@ public interface IMemberDao {
 	 */
 	public int getMemberCount(Connection conn, String memId) throws SQLException;
 	
+	/**
+	 * Map의 정보를 이용하여 회원 정보 중 원하는 컬럼을 수정하는 메소드
+	 * key값 정보 -> 회원ID(memid), 수정할컬럼명(field), 수정할데이터(data)
+	 * 
+	 * @param conn Connection 객체
+	 * @param paramMap 회원ID, 수정할 컬럼명, 수정할 데이터가 저장될 객체
+	 * @return 작업 성공 : 1, 작업 실패 : 0
+	 * @throws SQLException
+	 */
+	public int updateMember2(Connection conn, Map<String, String> paramMap) throws SQLException;
+	
 }
+
