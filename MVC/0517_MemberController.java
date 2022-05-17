@@ -9,6 +9,15 @@ import mvcService.IMemberService;
 import mvcService.MemberServiceImpl;
 import mvcVo.MemberVO;
 
+/*
+	MVC(Model, View, Controller 패턴) : MVC 패턴의 비즈니스 로직(모델)을 처리하는 클래스
+
+- VO(Value Obejcet), DTO(Data Transfer Object) : 데이터를 저장하는 역할만 하는 클래스
+- DAO(Data Acess Object) -> SQL문을 DB 서버엣 보내서 결과를 얻어오는 역할만 수행하는ㄴ 클래스
+- Service : 일을 수행하는 중간 관리자와 같은 역할을 수행하는 클래스.
+			서비스는 일이 있으면 그 일에 필요한 DAO를 호출해서 일을 처리한 후 처리 결과를 Controllr에 전달
+- Controller : 비즈니스 로직이 시작되는 곳으로 사용자의 요청에 맞는 일을 만들어서 Service에게 일을 시키고 Service가 보내온 처리 결과를 화면에 반영시키기 위해 View에게 전달한다.
+ */
 public class MemberController {
 	private Scanner scan = new Scanner(System.in);
 	
@@ -269,6 +278,5 @@ public class MemberController {
 		}else {
 			System.out.println(memId + "회원 정보 추가 실패!!!");
 		}
-		
 	}
 }
