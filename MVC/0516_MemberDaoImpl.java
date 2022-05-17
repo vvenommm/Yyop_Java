@@ -12,6 +12,20 @@ import java.util.Map;
 import mvcVo.MemberVO;
 
 public class MemberDaoImpl implements IMemberDao{
+	
+	//1번
+	private static MemberDaoImpl dao;
+	
+	//2번
+	private MemberDaoImpl() { }
+	
+	//3번
+	public static MemberDaoImpl getInstance() {
+		if(dao == null) dao = new MemberDaoImpl();
+		dao = MemberDaoImpl.getInstance();
+		
+		return dao;
+	}
 
 	@Override
 	public int insertMember(Connection conn, MemberVO memVo) throws SQLException {
