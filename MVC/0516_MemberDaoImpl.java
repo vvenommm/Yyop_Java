@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import mvcVo.MemberVO;
@@ -46,8 +47,19 @@ public class MemberDaoImpl implements IMemberDao{
 
 	@Override
 	public int updateMember(Connection conn, MemberVO memVo) throws SQLException {
-		String sql = "UPDATE MYMEMBER SET  WHERE";
-		return 0;
+		String sql = "UPDATE MYMEMBER SET MEM_PASS = ?, MEM_NAME = ?, MEM_TEL = ?, MEM_ADDR = ? WHERE MEM_ID = ?";
+		PreparedStatement prest = conn.prepareStatement(sql);
+		prest.setString(1, memVo.getMem_pass());
+		prest.setString(2, memVo.getMem_name());
+		prest.setString(3, memVo.getMem_tel());
+		prest.setString(4, memVo.getMem_addr());
+		prest.setString(5, memVo.getMem_id());
+		
+		int cnt = prest.executeUpdate();
+		
+		if(prest != null) try { prest.close(); } catch (SQLException e) { }
+		
+		return cnt;
 	}
 
 	@Override
@@ -58,10 +70,16 @@ public class MemberDaoImpl implements IMemberDao{
 		Statement stat = conn.createStatement();
 		ResultSet rset = stat.executeQuery(sql);
 		
+		all = new ArrayList<MemberVO>();
+			
 		while(rset.next()) {
-			all.add(new MemberVO(rset.getString("mem_id"), rset.getString("mem_pass"), rset.getString("mem_name"), rset.getString("mem_tel"), rset.getString("mem_addr")));
+			MemberVO memVo = new MemberVO();
+			memVo.setMem_id(rset.getNString("mem_id"));
+			memVo.setMem_id(rset.getString("mem_pass"));
+			memVo.setMem_id(rset.getNString("mem_name"));
+			memVo.setMem_id(rset.getNString("mem_tel"));
+			memVo.setMem_id(rset.getNString("mem_addr"));
 		}
-		
 		
 		if(stat != null) {stat.close();}
 		if(rset != null) {rset.close();}
@@ -84,4 +102,3 @@ public class MemberDaoImpl implements IMemberDao{
 	}
 	
 }
-
