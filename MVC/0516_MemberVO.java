@@ -16,14 +16,14 @@ public class MemberVO {
 
 	//VO 클래스의 별도의 생성자를 만들 때에는 기본 생성자도 반드시 같이 만들어 준다.
 	
-	public MemberVO(String mem_id, String mem_pass, String mem_name, String mem_tel, String mem_addr) {
-		super();
-		this.mem_id = mem_id;
-		this.mem_pass = mem_pass;
-		this.mem_name = mem_name;
-		this.mem_tel = mem_tel;
-		this.mem_addr = mem_addr;
-	}
+//	public MemberVO(String mem_id, String mem_pass, String mem_name, String mem_tel, String mem_addr) {
+//		super();
+//		this.mem_id = mem_id;
+//		this.mem_pass = mem_pass;
+//		this.mem_name = mem_name;
+//		this.mem_tel = mem_tel;
+//		this.mem_addr = mem_addr;
+//	}
 	
 	
 	public String getMem_id() {
