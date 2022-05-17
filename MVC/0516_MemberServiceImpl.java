@@ -3,6 +3,7 @@ package mvcService;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import mvcDao.IMemberDao;
 import mvcDao.MemberDaoImpl;
@@ -55,11 +56,7 @@ public class MemberServiceImpl implements IMemberService {
 			e.printStackTrace();
 		}finally {
 			if(conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO: handle exception
-				}
+				try { conn.close(); } catch (SQLException e) { }
 			}
 		}
 		return cnt;
@@ -138,5 +135,27 @@ public class MemberServiceImpl implements IMemberService {
 		}
 		return cnt;
 	}
+	
+	@Override
+	public int updateMember2(Map<String, String> paramMap) {
+		Connection conn = null;
+		int cnt = 0;
+		try {
+			conn = DBUtil3.getConnection();
+			cnt = dao.updateMember2(conn, paramMap);
 
+		} catch (SQLException e) {
+			cnt = 0;
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO: handle exception
+				}
+			}
+		}
+		return cnt;
+	}
 }
