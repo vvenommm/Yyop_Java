@@ -30,6 +30,7 @@
 
 <!-- <form action="/webTest/requestTest01.do" method="get"> -->
 <form action="/webTest/requestTest01.do" method="post">
+<!-- post로 하면 전송된 데이터 한글이 깨짐. doGet 메소드 처음에 request.setCharacterEncoding("utf-8")을 작성 -->
 <table border="1">
 	<tr>
 		<td>이름</td>
