@@ -33,14 +33,24 @@ public class ServletTest03 extends HttpServlet {
 	
 	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Servlet : " + this.getServletName() + "에서 service() 메소드 시작!");
 		
 		//GET 방식과 POST 방식에 맞는 메소드 호출하기
 		
 		
 		//방법1 ==> HttpServlet(부모클래스)의 service() 메소드로 위임하기. 서비스를 안 만들면 자동으로 이게 호출
-		super.service(req, resp);
+//		super.service(req, resp);
+		
+		//방법2 ==> 클라이언트의 전송방식(GET, POST 등)을 구분해서 직접 메소드 호출
+		String method = request.getMethod();
+		System.out.println("전송방식 : " + method);
+		
+		if("GET".equals(method)) {
+			this.doGet(request, response);
+		}else if("POST".equals(method)) {
+			doPost(request, response);
+		}
 	}
 
 	/**
