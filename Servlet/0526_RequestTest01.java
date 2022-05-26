@@ -21,8 +21,10 @@ public class RequestTest01 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//클라이언트에서 보낸 데이터를 받아서 처리하기(Request 객체 관련 데이터를 저장해서 받아옴)
+		//post방식으로 전달되는 데이터의 인코딩 방식을 설정
+		request.setCharacterEncoding("utf-8");
 		
+		//클라이언트에서 보낸 데이터를 받아서 처리하기(Request 객체 관련 데이터를 저장해서 받아옴)
 		
 		//request객체.getParameter("변수 명"); => 해당 변수에 설정된 값(항상 String 타입)을 가져온다.
 		String userName = request.getParameter("username");
