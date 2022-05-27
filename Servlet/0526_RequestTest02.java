@@ -22,8 +22,11 @@ public class RequestTest02 extends HttpServlet {
 		
 		int no1 = Integer.parseInt(request.getParameter("no1"));
 		int no2 = Integer.parseInt(request.getParameter("no2"));
+		
 		String op = request.getParameter("op");
 		double result = 0; //계산 결과 값
+		boolean calcOk = true; //계산 성공 여부가 저장될 변수 (계산 성공:true, 실패:false)
+		
 		
 		switch(op) {
 		case "+": result = no1 + no2; break;
@@ -64,6 +67,39 @@ public class RequestTest02 extends HttpServlet {
 //			out.println((no1 % no2) + "</p>");
 //		}
 		
+		switch(op) {
+		case "+" : result = no1 + no2; break;
+		case "-" : result = no1 - no2; break;
+		case "*" : result = no1 * no2; break;
+		case "/" :
+			if(no2 != 0) {
+				result = no1 / (double)no2;
+			}else {
+				calcOk = false;
+			}
+			break;
+		case "%" :
+			if(no2 != 0) {
+				result = no1 % no2;
+			}else {
+				calcOk = false;
+			}
+			
+			break;
+		
+		}
+		
+		out.println("<hr><hr>");
+		out.println("<h3>Request 객체 연습 계산기</h3>");
+		out.println("<hr>");
+		out.println("<p>" + no1 + " " + op + " " + no2 + " = " + result + "</p>");
+		out.printf("%d %s %d = ", no1, op, no2);
+		if(calcOk == true) {
+			out.println(result);
+		}else {
+			out.println("계산 불능 (0으로 나누기)");
+		}
+
 		out.println("</body></html>");
 		
 	}
