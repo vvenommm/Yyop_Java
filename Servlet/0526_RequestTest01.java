@@ -1,8 +1,8 @@
 package kr.or.ddit.basic.reqNresp;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,70 +10,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RequestTest01
+ * Servlet implementation class ResponseTest01
  */
-@WebServlet("/requestTest01.do")
-public class RequestTest01 extends HttpServlet {
+@WebServlet("/responseTest01.do")
+public class ResponseTest01 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//post방식으로 전달되는 데이터의 인코딩 방식을 설정
-		request.setCharacterEncoding("utf-8");
-		
-		//클라이언트에서 보낸 데이터를 받아서 처리하기(Request 객체 관련 데이터를 저장해서 받아옴)
-		
-		//request객체.getParameter("변수 명"); => 해당 변수에 설정된 값(항상 String 타입)을 가져온다.
-		String userName = request.getParameter("username");
-		String job = request.getParameter("job");
-		
-		//request객체.getParameterValues("변수 명"); => 같은 것이 여럿일 경우 사용하며 값의 자료형은 String[].
-		String[] hobbies = request.getParameterValues("hobby");
-		
-		//출력
-		response.setCharacterEncoding("utf-8"); //인코딩
-		response.setContentType("text/html; charset=utf-8"); //출력 형식
-		
-		PrintWriter out = response.getWriter(); //출력 스트림
-		out.println("<html><head><meta charset='utf-8'>");
-		out.println("<title>Request 객체 연습용</title></head>");
-		out.println("<body>");
-		out.println("<h3>Request 테스트 결과 - 1</h3>");
-		
-		out.println("<hr>");
-		
-		out.println("<table border='1'>");
-		out.println("<tr><td>이름</td>");
-		out.println("<td>" + userName + "</td></tr>");
-
-		out.println("<tr><td>직업</td>");
-		out.println("<td>" + job + "</td></tr>");
-		
-		out.println("<tr><td>취미</td>");
-		out.println("<td>");
-		if(hobbies != null) {
-			//배열 크기만큼 루프를 돌면서 값을 출력한다.
-			for(int i = 0; i < hobbies.length; i++) {
-				out.println(hobbies[i] + "<br>");
-			}
-			out.println("<hr>");
+		/*
+			forward 방식
+			==> 특정 서블릿에 대한 요청을 다른 서블릿이나 JSP문서로 넘김
+				이 때 매개변수도 같이 전송
+			==> 클라이언트의 웹브라우저의 URL 주소는 처음 요청할 때의 값 변경 X
+			==> 서버 내부에서만 접근 가능
 			
-			//향상 for문 사용
-			for(String h : hobbies) {
-				out.println(h + "<br>");
-			}
-		}
-		out.println("</td></tr>");
-		out.println("</body></html>");
+			request.getRequestDispatcher("/이동할 페이지의 주소"); => 이동할 페이지의 주소 = ContexxtPath 이후의 경로로 기술
+			
+			원래 이동하려는 주소 => http://localhost/webTest/forwardTest.do
+			
+			String userName = request.getParameter("username");
+			
+			이동할 페이지로 현재 페이지에서 만들어진 데이터를 보내려면 request객체.setAttribute() 메소드 이용
+			데이터를 받는 쪽: getAttribute() 메소드 사용
+			형식) request객체.setAttribute("키값", 데이터값);
+					'키값' => 문자열, '데이터값' => java의 모든 종류의 데이터 사용 가능
+		 */
+		
+		request.setAttribute("tel", "010-0000-0000");
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/forwardTest.do");
+		rd.forward(request, response);
+		
+		
+		
+		
+		
+		
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
