@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+	
+<!-- 이 문서는 iBatis에서 처리할 SQL 문을 작성하는 문서 -->
+<sqlMap namespace="mymember">
+	<!--
+		이 부분에는 처리한 SQL 문에 맞는 태그를 사용하여 SQL문을 기술
+		- 사용할 수 있는 기본 태그들
+		<select> ~~ </select>
+		<insert> ~~ </insert>
+		<update> ~~ </update>
+		<delete> ~~ </delete>
+		...
+		
+		
+	-->
+	
+	<!-- 
+		id속성 => 실행할 태그를 java 소스에서 호출할 때 사용되는 이름으로
+			위의 <sqlMap> 태그의 namespace 속성값과 연결해서 사용한다.
+			(예 : lprod.insertLprod)
+		parameterClass속성 => SQL문에 사용할 데이터가 들어있는 객체를 기술
+			(보통 VO 클래스, 자바의 기본 자료형, Map객체 등이 사용)
+			(VO 클래스 등을 기술할 때는 해당 클래스의 전체 이름을 기술해야 함)
+		
+		parameterClass 속성이나 resultClass 속성에는 <typeAlias>에 지정한 alias명 사용 가능
+	 -->
+	 
+	 <insert id="insertMember" parameterClass="mvcVO.MemberVO">
+	 	insert into mymember (mem_id, mem_pass, mem_name, mem_tel, mem_addr)
+	 	values (#mem_id#, #mem_name#, #mem_tel#, #mem_tel#, #mem_addr#)
+	 </insert>
+	 
+	 <update id="updateMember" parameterClass="memberVO">
+	 	update mymember
+	 	set mem_pass = #mem_pass#, mem_name=#mem_name#, mem_tel=#mem_tel#, mem_addr=#mem_addr#, 
+	 	where mem_id=#mem_id#
+	 </update>
+	 
+	 <!-- 
+	 	parameterClass에 설정된 값이 ☆★단일 값★☆이면 SQL문에 이 값을 나타내는 변수는 특별히 정해지지 않음
+	 	사용자가 임의로 지정 가능
+	  -->
+	  
+	 <delete id="deleteMember" parameterClass="String"> <!-- #lprod_gu#는 string이기 때문에 class이름도 string인데 대문자 소문자 노상관 -->
+			delete from mymember where mem_id=#ddd#
+	 </delete>
+	 
+	 
+	 <!-- 전체 데이터 가져오기 -->
+	 <!-- 
+	 	resultClass 속성 => select문을 처리한 결과를 저장할 VO 클래스나 Map 객체 또는 자바의 기본 자료형 이름을 지정
+	 	select한 결과가 여러개이면 자동으로 List에 담을 수 있음
+	 	그래서 결과가 여러개일 경우에도 이 resultClass에 저장하는 것으로
+	 	1개의 레코드가 저장될 클래스나 자료형 이름을 지정하면 됨
+	 	select문일 때 무조건 resultClass가 있음
+	  -->
+	 <select id="getAllMembers" resultClass="memberVO">
+	 	select * from mymember
+	 </select>
+	 
+	 <!-- 결과가 1개인 select문 -->
+	 <select id="getMemberCount" parameterClass="string" resultClass="int">
+	 	select count(*) cnt from mymember where mem_id = #mem_id#
+	 </select>
+	 
+	 
+	 <!-- 
+	 	Map을 파라미터로 받아서 처리할 때 변수명 역할은 Map의 Key 값으로 한다.
+	 	Key값 정보 = 회원ID(memId), 수정할 컬럼명(field), 수정할 데이터(data)
+	 	
+	 	매개변수로 가져온 값을 걸럼명 등의 자리에서 사용할 경우 달라($) 기호를 사용
+	 	예) $변수명$ 또는 $key값$
+	  -->
+	 <update id="updateMember2" parameterClass="java.util.Map">
+	 	update mymember
+	 	set $field$ = #data#
+	 	where mem_id = #memId#
+	 </update>
+	 
+	 <!-- 
+	 	로그인하는 멤버 한 명 데이터만 가져오기
+	  -->
+	  
+	  <select id="getOneMember" parameterClass="String" resultClass="mymember">
+	  	select * from mymember where mem_id=#mem_id#
+	  </select>
+	
+</sqlMap>
