@@ -86,8 +86,8 @@
 	 	로그인하는 멤버 한 명 데이터만 가져오기
 	  -->
 	  
-	  <select id="getOneMember" parameterClass="String" resultClass="mymember">
-	  	select * from mymember where mem_id=#mem_id#
+	  <select id="getOneMember" parameterClass="mymember" resultClass="mymember">
+	  	select * from mymember where mem_id=#mem_id# and mem_pass=#mem_pass#
 	  </select>
 	
 </sqlMap>
