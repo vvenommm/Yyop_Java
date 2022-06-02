@@ -6,7 +6,7 @@ package kr.or.ddit.basic.session;
 	DB 테이블의 컬럼값들과 
  */
 
-public class JDBC_MemberVO {
+public class iBatis_MemberVO {
 	//ctrl shift y -> 소문자로 바꾸기
 	private String mem_id;
 	private String mem_pass;
