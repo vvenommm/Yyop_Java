@@ -88,6 +88,10 @@ public class FileUpload extends HttpServlet {
 	
 	//////////////////////////////////////////////////////////////////////////////
 	
+	/*
+		Part 객체의 구조
+			1) 파일이 아닌 일반 데이터의 경우 --> 아이패드에 사진 캡쳐한거 옮겨적기
+	 */
 	//Part 구조 안에서 파일명을 찾는 메소드
 	private String extractFileName(Part part) {
 		String fileName = "";
