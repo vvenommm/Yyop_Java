@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>File Upload jsp입니다</title>
+<title>File Upload.jsp입니다</title>
 </head>
 <body>
 <h3>File Upload 연습</h3>
