@@ -6,7 +6,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>File List.jsp입니다</title>
+<style>
+table{
+	border : 3px double pink;
+}
+th{
+	width: 100px;
+	padding : 5px;
+	text-align: center;
+}
+td{
+	padding : 5px;
+	text-align: center;
+}
+</style>
 </head>
 <body>
 <%
@@ -39,7 +53,7 @@
 					<td><%=fvo.getOrigin_file_name() %></td>
 					<td><%=fvo.getFile_size() %></td>
 					<td><%=fvo.getFile_date() %></td>
-					<td>Download</td>
+					<td><a href="<%=request.getContextPath()%>/FileDownload.do?fileno=<%=fvo.getFile_no()%>">Download</a></td>
 				</tr>
 		<%
 				}
