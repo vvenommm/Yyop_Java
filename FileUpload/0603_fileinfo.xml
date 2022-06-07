@@ -30,8 +30,8 @@
 	  <!-- ================================================================================================ -->
 	  
 	  <insert id="insertFileinfo">
-	  	insert into fileinfo (file_no, file_writer, orgin_file_name, save_file_name, file_size, file_date)
-	  	values(fileinfo_seq.nextval, #file_writer#, #orgin_file_name#, #save_file_name#, #file_size#, sysdate)
+	  	insert into fileinfo
+	  	values(fileinfo_seq.nextval, #file_writer#, #origin_file_name#, #save_file_name#, #file_size#, sysdate)
 	  </insert>
 	  
 	  <select id="getAllFileinfo" resultClass="fileinfo">
