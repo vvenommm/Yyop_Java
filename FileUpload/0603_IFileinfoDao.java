@@ -6,6 +6,7 @@ import java.util.List;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 import kr.or.ddit.basic.fileupload.vo.FileInfoVO;
+import kr.or.ddit.basic.fileupload.vo.MemberVO;
 
 public interface IFileinfoDao {
 	
@@ -34,4 +35,21 @@ public interface IFileinfoDao {
 	 * @throws SQLException
 	 */
 	public FileInfoVO getFileinfo(SqlMapClient smc, int fileNo) throws SQLException;
+	
+	/**
+	 * mymember에 회원 가입
+	 * @param smc
+	 * @param vo 회원 정보를 갖고 있는 객체
+	 * @return 가입된 회원의 이름 리턴
+	 * @throws SQLException
+	 */
+	public List<MemberVO> insertMember(SqlMapClient smc, MemberVO vo) throws SQLException;
+	
+	/**
+	 *  모든 멤버 리스트 가져오기
+	 * @param smc
+	 * @return 모든 멤버 리스트
+	 * @throws SQLException
+	 */
+	public List<MemberVO> getAllMembers (SqlMapClient smc) throws SQLException;
 }
