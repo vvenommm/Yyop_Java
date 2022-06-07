@@ -19,7 +19,7 @@
 
 <table border="1">
 	<tr>
-		<th colspan="5"><input type="button" value="회원추가"  onclick='location.href=<%=request.getContextPath()%>/memberJoin.jsp'></th>
+		<th colspan="5"><a href="memberJoin.jsp"><button>회원추가</button></a></th>
 	</tr>
 	<tr>
 		<th>아이디</th>
@@ -36,8 +36,8 @@
 		<td><%=vo.getMem_id()%></td>
 		<td><%=vo.getMem_pass()%></td>
 		<td><%=vo.getMem_name()%></td>
-		<td><%=vo.getMem_hp()%></td>
-		<td><%=vo.getMem_add1()%> <%=vo.getMem_add2() %></td>
+		<td><%=vo.getMem_tel()%></td>
+		<td><%=vo.getMem_addr()%></td>
 	</tr>
 <%
 		}
