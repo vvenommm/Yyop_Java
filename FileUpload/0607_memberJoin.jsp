@@ -24,7 +24,7 @@
 				<label>비밀번호</label>
 			</td>
 			<td>
-				<input type="password" id="pw"  name="pw"  placeholder="비밀번호를 입력해주세요."><br>
+				<input type="password" id="pw"  name="pass"  placeholder="비밀번호를 입력해주세요."><br>
 			</td>
 		</tr>
 		<tr>
@@ -32,7 +32,7 @@
 				<label>비밀번호 확인</label>
 			</td>
 			<td>
-				<input type="password" id="pwCF" name="pwCF"  placeholder="비밀번호를 다시 입력해주세요.">
+				<input type="password" id="pwCF" name="passCF"  placeholder="비밀번호를 다시 입력해주세요.">
 			</td>
 		</tr>
 		<tr>
@@ -48,7 +48,7 @@
 				<label>연락처</label>
 			</td>
 			<td>
-				<input type="text" id="name" name="name"  placeholder="연락처를 입력해주세요.">
+				<input type="text" id="tel" name="tel"  placeholder="연락처를 입력해주세요.">
 			</td>
 		</tr>
 		<tr>
@@ -56,7 +56,7 @@
 				<label>주소</label>
 			</td>
 			<td>
-				<input type="text" id="name" name="name"  placeholder="주소를 입력해주세요.">
+				<input type="text" id="addr" name="addr"  placeholder="주소를 입력해주세요.">
 			</td>
 		</tr>
 		<tr>
@@ -65,6 +65,13 @@
 			</td>
 			<td>
 				<button id="prof" name="prof"  formaction="">사진첨부</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<button type="submit">저장</button>
+				<button type="reset">취소</button>
+				<a href="memberList.jsp"><button>회원목록</button></a>
 			</td>
 		</tr>
 	</table>
